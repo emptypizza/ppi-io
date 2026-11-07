@@ -20,8 +20,8 @@ try {
   if (!auth.token) throw new Error('Cloudflare 토큰을 확인할 수 없습니다.');
   const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(accountId)}/subscriptions?per_page=100`, { headers: { Authorization: `Bearer ${auth.token}` } });
   const body = await response.json();
-  if (!response.ok || !body.success || (body.result_info?.total_pages || 1) > 1) throw new Error('계정 구독 조회가 거부되었거나 불완전합니다. Free 확인 전 배포하지 않습니다.');
-  assertFreeSubscriptions(body.result);
+  if (!response.ok || !body.success) throw new Error('계정 구독 조회가 거부되었습니다. Free 확인 전 배포하지 않습니다.');
+  assertFreeSubscriptions(body.result, body.result_info);
   console.log('무료 계정 구독 검사 통과. 유료 업그레이드를 수행하지 않습니다.');
   if (!args.includes('--check')) {
     const vars = JSON.parse(readFileSync(new URL('../public/config.json', import.meta.url), 'utf8'));

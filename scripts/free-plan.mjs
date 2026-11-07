@@ -1,5 +1,12 @@
-export function assertFreeSubscriptions(subscriptions) {
+export function assertFreeSubscriptions(subscriptions, pageInfo = {}) {
   if (!Array.isArray(subscriptions)) throw new Error('Cloudflare 구독 정보를 확인할 수 없습니다. 배포를 중단합니다.');
+  const total = pageInfo.total_count;
+  if ((total !== undefined && (!Number.isSafeInteger(total) || total !== subscriptions.length))
+    || (pageInfo.page !== undefined && pageInfo.page !== 1)
+    || (pageInfo.total_pages !== undefined && pageInfo.total_pages !== 1)
+    || (total === undefined && pageInfo.per_page !== undefined && subscriptions.length >= pageInfo.per_page)) {
+    throw new Error('구독 목록이 불완전합니다. 전체 무료 상태 확인 전 배포하지 않습니다.');
+  }
   for (const subscription of subscriptions) {
     const plan = subscription.rate_plan;
     const id = String(plan?.id || '');
