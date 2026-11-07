@@ -12,6 +12,9 @@ Original prompt: Implement PPI.io as a separate public repository from ppi at 7b
 - Chromium andWebKit UI/practice passed, fullscreens inspected. Firefox failed before page creation; actualSafari/Edge remain unverified.
 - Free-only deploy wrapper correctly refuses deployment without Cloudflare login.
 - GitHub Pages configured to deploy validated build via Actions; public config has empty API/sitekey until actualFreeaccount setup.
+- Feature commit3e35ff6 pushed; Pages run42338758903 passed all60tests and deployed. Public assets exactly match the build.
+- Public Chromium/WebKit passed; nativeSafari27.0.1 basic practicegroundrender/timer/reentry observed through nativeUI. Initialblankcapture was transient, rootcauseunconfirmed. Firefox/actualEdge remain unverified.
+- User did not approve the firstWranglerdeviceauthorization within5minutes; request expired without authentication. No Cloudflare account or managed deployment was created.
 
 ## External prerequisites
 
