@@ -6,3 +6,11 @@ dist/
 *.log
 .vercel
 .cache
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.wrangler/
+output/
+test-results/
+playwright-report/
+*.local.json

@@ -1,0 +1,7 @@
+# Local-only development. Never deploy DEV_BYPASS=true.
+ONLINE_ENABLED="true"
+DEV_BYPASS="true"
+ALLOWED_ORIGIN="http://127.0.0.1:5173"
+HMAC_SECRET="local-testing-only-replace-for-production"
+ADMIN_SECRET="local-admin-testing-replace-for-production"
+TURNSTILE_SECRET=""

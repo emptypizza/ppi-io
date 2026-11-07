@@ -1,0 +1,27 @@
+{
+  "name": "ppi-io",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "dev:worker": "wrangler dev --ip 127.0.0.1 --port 8787",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm test && npm run test:worker && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "deploy:worker": "node scripts/deploy-worker.mjs",
+    "test:worker": "vitest run --config vitest.worker.config.ts"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "1.6.0",
+    "@cloudflare/workers-types": "5.20261107.1",
+    "@types/node": "22.20.5",
+    "playwright": "1.59.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.6",
+    "vitest": "5.1.0",
+    "wrangler": "4.158.0"
+  }
+}

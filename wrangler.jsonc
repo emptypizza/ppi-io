@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ppi-io-api",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2026-11-07",
+  "workers_dev": true,
+  "vars": { "ONLINE_ENABLED": "false", "ALLOWED_ORIGIN": "https://emptypizza.github.io", "DEV_BYPASS": "false" },
+  "durable_objects": { "bindings": [
+    { "name": "ADMISSION", "class_name": "AdmissionDO" },
+    { "name": "ROOMS", "class_name": "RoomDO" }
+  ] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["AdmissionDO", "RoomDO"] }]
+}
