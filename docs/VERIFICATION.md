@@ -16,8 +16,11 @@
 - 독립 headless Chromium 두 context는 각각 한 번의 실제 빠른 대전에서 Turnstile의 `Verify you are human` 체크박스를 표시. 자동 통과되지 않아 조작 없이 중단. 게임 페이지 예외0, 챌린지 보조 호스트 DNS 오류와 PAT401 관측. `/api/join` 요청0, WebSocket0이므로 클라우드 다중 플레이는 아직 미검증.
 - 실제 사용자 브라우저에서 사람 확인을 거친 입장과 서로 다른 두 실제 기기·회선의 PvP가 남아 있음. 아래의 과거 로컬 검증을 실서비스 검증으로 해석하지 않음.
 - Microsoft 공식 Mac Stable Edge157.0.4341.42의 다운로드 SHA256·Microsoft 서명·Apple 공증을 확인하고, 임시 독립 프로필의 실제 Edge 바이너리(headless)에서 연습 이동·Shift·발사·지상전·결과·보상·재시작·저장 보존을 확인. 원본 앱 설정이나 기본 브라우저를 변경하지 않음.
-- Edge에서 origin 루트 `favicon.ico`의404를 발견해 명시적인 상대경로 SVG 아이콘을 추가. 수정한 로컬 빌드의 Edge에서 favicon200과 페이지·콘솔·CDP 오류0, 표준 web-game 클라이언트의 이동·렌더링2회 통과. 공개 배포 후 재확인 예정.
-- macOS27.0.1에서 Firefox148.0.2/Playwright1.59.1의 기본 headless와 정상 headed 실행이 모두 페이지 생성 전 sandbox extension 권한 오류로 실패. OS 보호 설정은 바꾸지 않음. 무료 Ubuntu Actions에서 공개 연습을 검사하는 수동 workflow를 추가해 대체 실행 예정.
+- Edge에서 origin 루트 `favicon.ico`의404를 발견해 명시적인 상대경로 SVG 아이콘을 추가. 수정한 로컬 빌드와 공개 사이트의 실제 Edge에서 favicon200과 페이지·콘솔·CDP 오류0, 표준 web-game 클라이언트의 이동·렌더링2회 통과. Pages42451279778 및42451488475 배포 성공. 공개 HTML·JS·CSS·설정·아이콘5개가 빌드와 바이트 단위로 일치.
+- macOS27.0.1에서 Firefox148.0.2/Playwright1.59.1의 기본 headless와 정상 headed 실행이 모두 페이지 생성 전 sandbox extension 권한 오류로 실패. OS 보호 설정은 바꾸지 않음.
+- 대체 [Firefox CI42451499966](https://github.com/emptypizza/ppi-io/actions/runs/42451499966)는 Ubuntu24.04에서 최종 성공. 실제 공개 페이지의 훈련소·WASD·Shift·지상전·발사·자연 결과와 보상·재시작·저장8개 검사 통과, 페이지·콘솔·네트워크·HTTP 오류0. WASD각45px, 일반강하20/Shift40, 탄약30→28, 최후생존승리·골드655→718·stage2를 확인. 결과 JSON과 스크린샷8장을 실제 검토. 온라인·Turnstile·WS는0건이므로 공개 PvP 증거로 확대하지 않음.
+- 첫 Ubuntu-latest 실행42451403691은 당시 Ubuntu26.04를 Playwright1.59.1이 지원하지 않아 브라우저 설치에서 실패. 지원되는 표준 Ubuntu24.04로 workflow를 고정한 뒤 위 실행에서 통과함.
+- 실제 Safari 추가 검사는 브라우저 동시 사용으로 조작 충돌을 감지해 진행하지 않았으며, 아래2026-11-07의 기본 실제 Safari 검증 범위를 유지.
 
 ## 2026-11-07 기록
 
@@ -42,7 +45,7 @@
 - 실제 Turnstile·공개 관리형 WebSocket 검증 후 온라인 개방.
 - 서로 다른 두 실제 기기·인터넷 회선에서 PvP와RTT 측정.
 - 실제 Edge의 native GUI 수동 조작은 미검증이며 headless 실제 바이너리 검증과 구분. Safari 기본 연습 검증을 온라인 실서비스 검증으로 확대하지 않음.
-- Firefox는 macOS에서 페이지 생성 전 sandbox/SWGL 실행 오류로 미검증. Ubuntu 수동 검증 workflow 결과는 별도 기록. 프로젝트 오류라고 단정하지 않음.
+- Firefox의 공개 연습 자동화는 Ubuntu에서 통과했지만, 이 Mac의 Firefox 자동화 시작 제한은 남아 있음. 브라우저 실행 전 오류를 게임 결함으로 단정하지 않음.
 
 현재 공개 사이트는 봇 연습을 제공하며, 관리형 온라인은 최종 접속 검증을 위해 입장을 열어 둔 상태입니다. 공개 온라인 다중 플레이 검증이 완료됐다고 기록하지 않습니다.
 
@@ -66,6 +69,6 @@ npx playwright install --with-deps firefox
 node tests/browser-practice.mjs --browser firefox --url https://emptypizza.github.io/ppi-io/
 ```
 
-GitHub Actions의 `Verify deployed Firefox practice`를 수동 실행할 수도 있습니다. 표준 Ubuntu runner를 사용하며 스크린샷·상태·오류 기록만1일 보관합니다. 이 검사는 온라인 버튼·Turnstile을 사용하지 않고 온라인 요청 발생 시 실패합니다.
+GitHub Actions의 `Verify deployed Firefox practice`를 수동 실행할 수도 있습니다. Playwright1.59.1이 지원하는 표준 Ubuntu24.04 runner를 사용하며 스크린샷·상태·오류 기록만1일 보관합니다. 이 검사는 온라인 버튼·Turnstile을 사용하지 않고 온라인 요청 발생 시 실패합니다.
 
 런타임 테스트는 로컬 Miniflare/workerd에서 실행합니다. 실제 공급자 무료량을 고의로 소진하는 테스트는 하지 않습니다. 시나리오를 위한 상태 조작은 테스트 런타임에서만 수행하며 공개 관리자 우회 경로를 추가하지 않았습니다.
