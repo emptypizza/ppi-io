@@ -15,6 +15,9 @@
 - 공개 서버의 master gate와 운영 입장을 검증 목적으로 열어 둠. 개발용 인증 우회는 꺼진 상태.
 - 독립 headless Chromium 두 context는 각각 한 번의 실제 빠른 대전에서 Turnstile의 `Verify you are human` 체크박스를 표시. 자동 통과되지 않아 조작 없이 중단. 게임 페이지 예외0, 챌린지 보조 호스트 DNS 오류와 PAT401 관측. `/api/join` 요청0, WebSocket0이므로 클라우드 다중 플레이는 아직 미검증.
 - 실제 사용자 브라우저에서 사람 확인을 거친 입장과 서로 다른 두 실제 기기·회선의 PvP가 남아 있음. 아래의 과거 로컬 검증을 실서비스 검증으로 해석하지 않음.
+- Microsoft 공식 Mac Stable Edge157.0.4341.42의 다운로드 SHA256·Microsoft 서명·Apple 공증을 확인하고, 임시 독립 프로필의 실제 Edge 바이너리(headless)에서 연습 이동·Shift·발사·지상전·결과·보상·재시작·저장 보존을 확인. 원본 앱 설정이나 기본 브라우저를 변경하지 않음.
+- Edge에서 origin 루트 `favicon.ico`의404를 발견해 명시적인 상대경로 SVG 아이콘을 추가. 수정한 로컬 빌드의 Edge에서 favicon200과 페이지·콘솔·CDP 오류0, 표준 web-game 클라이언트의 이동·렌더링2회 통과. 공개 배포 후 재확인 예정.
+- macOS27.0.1에서 Firefox148.0.2/Playwright1.59.1의 기본 headless와 정상 headed 실행이 모두 페이지 생성 전 sandbox extension 권한 오류로 실패. OS 보호 설정은 바꾸지 않음. 무료 Ubuntu Actions에서 공개 연습을 검사하는 수동 workflow를 추가해 대체 실행 예정.
 
 ## 2026-11-07 기록
 
@@ -38,8 +41,8 @@
 
 - 실제 Turnstile·공개 관리형 WebSocket 검증 후 온라인 개방.
 - 서로 다른 두 실제 기기·인터넷 회선에서 PvP와RTT 측정.
-- 실제 Edge 검증. Safari 기본 연습 검증을 온라인 실서비스 검증으로 확대하지 않음.
-- Firefox는 애플리케이션 페이지 생성 전macOS sandbox/SWGL 실행 오류로 미검증. 프로젝트 오류라고 단정하지 않음.
+- 실제 Edge의 native GUI 수동 조작은 미검증이며 headless 실제 바이너리 검증과 구분. Safari 기본 연습 검증을 온라인 실서비스 검증으로 확대하지 않음.
+- Firefox는 macOS에서 페이지 생성 전 sandbox/SWGL 실행 오류로 미검증. Ubuntu 수동 검증 workflow 결과는 별도 기록. 프로젝트 오류라고 단정하지 않음.
 
 현재 공개 사이트는 봇 연습을 제공하며, 관리형 온라인은 최종 접속 검증을 위해 입장을 열어 둔 상태입니다. 공개 온라인 다중 플레이 검증이 완료됐다고 기록하지 않습니다.
 
@@ -55,5 +58,14 @@ npm run check
 ```sh
 node tests/online-soak.mjs http://127.0.0.1:5173/ http://127.0.0.1:8787
 ```
+
+공개 연습만 검사하는 브라우저 흐름(독립 저장 fixture·고정 연습 seed·실제 입력·기존 시간 전진 hook):
+
+```sh
+npx playwright install --with-deps firefox
+node tests/browser-practice.mjs --browser firefox --url https://emptypizza.github.io/ppi-io/
+```
+
+GitHub Actions의 `Verify deployed Firefox practice`를 수동 실행할 수도 있습니다. 표준 Ubuntu runner를 사용하며 스크린샷·상태·오류 기록만1일 보관합니다. 이 검사는 온라인 버튼·Turnstile을 사용하지 않고 온라인 요청 발생 시 실패합니다.
 
 런타임 테스트는 로컬 Miniflare/workerd에서 실행합니다. 실제 공급자 무료량을 고의로 소진하는 테스트는 하지 않습니다. 시나리오를 위한 상태 조작은 테스트 런타임에서만 수행하며 공개 관리자 우회 경로를 추가하지 않았습니다.
