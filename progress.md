@@ -21,6 +21,9 @@ Original prompt: Implement PPI.io as a separate public repository from ppi at 7b
 - 2026-11-08: User completed Wrangler device authorization. The target account is authenticated and its Workers plans UI explicitly shows Free, $0, Current plan. No paid upgrade or payment method was added.
 - Free verification now supports an explicitly supplied, ignored, exact-account dashboard observation valid for15minutes when Billing Read API access is unavailable. It never overrides a successful paid/ambiguous API response.
 - Full check now passes57unit+9workerdtests. Fresh public practice65.5second natural run, Chromium/WebKit functional QA, and local20client71second repeat all pass.
-- Worker deployed closed at https://ppi-io-api.ppi-io.workers.dev; Turnstile Managed widget and three unique production secrets are configured. Initial TLS propagation is pending before API checks and public client deployment.
+- Worker initially deployed closed at https://ppi-io-api.ppi-io.workers.dev; Turnstile Managed widget and three unique production secrets are configured. Initial TLS errors cleared by14:10KST without changing certificate/DNS settings.
+- Commit a84c4fd and Pages run42449573580 succeeded; public config contains the production HTTPS API and public Turnstile sitekey. Secrets remain ignored and local/Worker-only.
+- Public origin/challenge/ticket/admin rejection and CORS checks pass. Admin pause/unpause and master gate verified; online currently open for final human-browser verification, DEV_BYPASS false.
+- Two independent headless contexts each tried normal Quick Match once, but Turnstile displayed Verify you are human. No CAPTCHA interaction/bypass/retry performed, no join requests or WebSockets created. Challenge auxiliary DNS/PAT errors observed, app page exceptions0. Public multiplayer remains unverified; user was asked to check via their own PC browser.
 - Public PvP on two actual devices/networks remains a deployment verification gate.
-- Never share provider tokens or private secrets in chat or Git. Keep admission closed until service checks pass.
+- Never share provider tokens or private secrets in chat or Git. If actual service validation fails, close admissions before backend changes and recheck the Free plan before redeployment.

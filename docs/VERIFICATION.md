@@ -9,7 +9,12 @@
 - 사용자 승인으로 Wrangler 로그인이 완료됐으며, 로그인된 대상 계정의 Workers plans에서 Free·$0·Current plan을 직접 확인.
 - Billing Read가 없는 OAuth를 위해15분 이내의 명시적 대시보드 관측 기록을 검사하는 배포 경로를 추가. Paid 또는 불완전한 성공 API 응답은 계속 거부.
 - `https://ppi-io-api.ppi-io.workers.dev`에 입장 닫힌 상태로 Worker·SQLite DO를 배포하고 운영 secret3개를 설정. Turnstile Managed hostname은 `emptypizza.github.io`.
-- 새 workers.dev 주소의 TLS 준비와 클라이언트 배포·실제 공개 WebSocket 검증은 진행 중. 아래의 과거 로컬 검증을 실서비스 검증으로 해석하지 않음.
+- 최초 workers.dev 등록 직후 TLS 연결 오류가 있었으나14:10 KST 재확인에서 인증서 검증과 HTTP 응답이 정상화됨. 검증 우회·인증서 구매·DNS 수동 변경은 하지 않음.
+- GitHub Actions42449573580 검사·Pages 배포 성공. 공개 설정의 HTTPS API 주소와 Turnstile sitekey가 로컬 설정과 일치.
+- 실제 공개 API에서 잘못된 Origin403, 빈 Turnstile 인증403, 위조 티켓401, 무인증 관리자401, 정상 CORS preflight204를 확인. 관리자로 입장 닫기와 열기 모두200 및 영속 상태 반영 확인.
+- 공개 서버의 master gate와 운영 입장을 검증 목적으로 열어 둠. 개발용 인증 우회는 꺼진 상태.
+- 독립 headless Chromium 두 context는 각각 한 번의 실제 빠른 대전에서 Turnstile의 `Verify you are human` 체크박스를 표시. 자동 통과되지 않아 조작 없이 중단. 게임 페이지 예외0, 챌린지 보조 호스트 DNS 오류와 PAT401 관측. `/api/join` 요청0, WebSocket0이므로 클라우드 다중 플레이는 아직 미검증.
+- 실제 사용자 브라우저에서 사람 확인을 거친 입장과 서로 다른 두 실제 기기·회선의 PvP가 남아 있음. 아래의 과거 로컬 검증을 실서비스 검증으로 해석하지 않음.
 
 ## 2026-11-07 기록
 
@@ -36,7 +41,7 @@
 - 실제 Edge 검증. Safari 기본 연습 검증을 온라인 실서비스 검증으로 확대하지 않음.
 - Firefox는 애플리케이션 페이지 생성 전macOS sandbox/SWGL 실행 오류로 미검증. 프로젝트 오류라고 단정하지 않음.
 
-이 항목이 남아 있는 동안 공개 사이트는 봇 연습을 제공하고 온라인은 닫힌 상태입니다.
+현재 공개 사이트는 봇 연습을 제공하며, 관리형 온라인은 최종 접속 검증을 위해 입장을 열어 둔 상태입니다. 공개 온라인 다중 플레이 검증이 완료됐다고 기록하지 않습니다.
 
 ## 재현
 
