@@ -9,9 +9,36 @@
 1. https://dash.cloudflare.com/sign-up 에서 무료 계정 생성과 이메일 인증을 완료합니다.
 2. Workers 플랜이 **Free**인지 확인합니다. 유료 전환과 결제수단 등록을 하지 않습니다.
 3. `npx wrangler login`으로 인증합니다. 비밀번호·OAuth 토큰·API 키를 Git이나 채팅에 기록하지 않습니다.
-4. `npm run deploy:worker -- --check`를 실행합니다. 구독 API 조회로 무료 상태가 확인되지 않으면 배포가 실패합니다. 조회 권한이 없으면 인증 권한을 확인합니다.
+4. `npm run deploy:worker -- --check`를 실행합니다. 기본 경로는 구독 API 조회이며 전체 구독 목록이 명시적인 Free 상태여야 통과합니다. 조회 권한이 없으면 아래의 최신 대시보드 확인 증거를 명시적으로 제공할 수 있습니다.
 
 가입·이메일 인증·로그인은 사용자 본인 확인이 필요한 단계입니다. 로컬 테스트는 계정 없이 실행할 수 있습니다.
+
+### 구독 API 권한이 없는 경우
+
+표준 Wrangler OAuth는 구독 조회에 필요한 Billing Read 권한을 포함하지 않을 수 있습니다. 로그인된 대상 계정의 `https://dash.cloudflare.com/<ACCOUNT_ID>/workers/plans`에서 **Free 카드의 `$0`, `For personal use and simple applications`, 비활성 `Current plan`** 표시를 직접 확인한 경우에만 저장소 안의 `free-plan.local.json`에 다음 형식으로 기록합니다. `observedAt`은 실제 확인한 UTC 시각을 `new Date().toISOString()` 형식으로 넣습니다. 예시 시각을 재사용하지 않습니다.
+
+```json
+{
+  "type": "cloudflare-dashboard",
+  "accountId": "<ACCOUNT_ID>",
+  "plan": "free",
+  "currentPlan": true,
+  "url": "https://dash.cloudflare.com/<ACCOUNT_ID>/workers/plans",
+  "observedAt": "<ACTUAL_OBSERVED_UTC_ISO_TIMESTAMP>",
+  "evidence": "Free | $0 | For personal use and simple applications | Current plan"
+}
+```
+
+```sh
+npm run deploy:worker -- --check --free-plan-proof free-plan.local.json
+npm run deploy:worker -- --free-plan-proof free-plan.local.json
+# 온라인 개방 시에도 같은 검사를 다시 실행합니다.
+npm run deploy:worker -- --open --free-plan-proof free-plan.local.json
+```
+
+증거는 정확한 대상 계정·Workers 플랜 URL·필드와 일치해야 하며 확인 후 15분까지만 유효합니다. 미래 시각, 추가/누락 필드, 다른 문구는 거부합니다. `*.local.json`은 실제로 Git에서 무시되는 파일이어야 하고 커밋하지 않습니다. 이는 운영자가 로그인된 UI를 확인한 기록이며 Cloudflare가 서명한 증명은 아닙니다. 파일 작성만으로 무료 상태가 확인되는 것은 아니므로 직접 관측 없이 만들거나 갱신하지 않습니다.
+
+대안은 구독 API의 거부·전송·형식 오류 때만 사용합니다. API가 성공했으나 Paid·불명확·불완전한 응답이면 증거 파일이 있어도 배포를 중단합니다. 권한 부족이나 `default_usage_model`을 무료 상태로 추정하지 않으며 검사 생략 옵션은 제공하지 않습니다.
 
 ## Turnstile과 Worker secret
 

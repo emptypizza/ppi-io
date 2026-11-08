@@ -18,7 +18,9 @@ Original prompt: Implement PPI.io as a separate public repository from ppi at 7b
 
 ## External prerequisites
 
-- User has no Cloudflare account. Account signup, email verification and login are required for managed online deployment.
-- Require confirmed Workers Free before deployment; no paid upgrades.
+- 2026-11-08: User completed Wrangler device authorization. The target account is authenticated and its Workers plans UI explicitly shows Free, $0, Current plan. No paid upgrade or payment method was added.
+- Free verification now supports an explicitly supplied, ignored, exact-account dashboard observation valid for15minutes when Billing Read API access is unavailable. It never overrides a successful paid/ambiguous API response.
+- Full check now passes57unit+9workerdtests. Fresh public practice65.5second natural run, Chromium/WebKit functional QA, and local20client71second repeat all pass.
+- Worker deployed closed at https://ppi-io-api.ppi-io.workers.dev; Turnstile Managed widget and three unique production secrets are configured. Initial TLS propagation is pending before API checks and public client deployment.
 - Public PvP on two actual devices/networks remains a deployment verification gate.
-- OAuth device login requested from user; never share provider tokens in chat or Git. Public online stays closed until account/Free proof is available.
+- Never share provider tokens or private secrets in chat or Git. Keep admission closed until service checks pass.

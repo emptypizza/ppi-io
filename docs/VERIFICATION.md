@@ -1,4 +1,17 @@
-# 검증 기록 · 2026-11-07
+# 검증 기록
+
+## 2026-11-08 재검증과 관리형 배포
+
+- 새 전체 검사: 단위 테스트57개, 실제 workerd 통합9개, TypeScript와 Vite 빌드 통과.
+- 공개 Chromium·WebKit에서 이동·Shift 강하·전투·보상·재시작·강화 구매·저장 유지 통과. 원본 저장 키는 변경되지 않음.
+- Chromium에서 가상 시간 조작 없이65.5초, 재시작3회, 지상 타이머 감소와 화면 변화를 확인. 두 브라우저의 페이지·콘솔·네트워크·HTTP 오류0.
+- 로컬 실제 Worker에20개 프로토콜 클라이언트로71,189ms 재검증. 첫 라운드20명 결과 수신 후 두 번째 방 재사용을 확인. 예상 밖 단절0,21번째 입장은503으로 거부.
+- 사용자 승인으로 Wrangler 로그인이 완료됐으며, 로그인된 대상 계정의 Workers plans에서 Free·$0·Current plan을 직접 확인.
+- Billing Read가 없는 OAuth를 위해15분 이내의 명시적 대시보드 관측 기록을 검사하는 배포 경로를 추가. Paid 또는 불완전한 성공 API 응답은 계속 거부.
+- `https://ppi-io-api.ppi-io.workers.dev`에 입장 닫힌 상태로 Worker·SQLite DO를 배포하고 운영 secret3개를 설정. Turnstile Managed hostname은 `emptypizza.github.io`.
+- 새 workers.dev 주소의 TLS 준비와 클라이언트 배포·실제 공개 WebSocket 검증은 진행 중. 아래의 과거 로컬 검증을 실서비스 검증으로 해석하지 않음.
+
+## 2026-11-07 기록
 
 ## 완료
 
@@ -16,10 +29,9 @@
 - 스크린샷을 실제 열어 메뉴·훈련소·강하·전투·결과·두 인간 접속 화면을 검토.
 - Cloudflare 인증이 없으면 배포 스크립트가 중단되는 것을 확인. 비밀 키와 개발용 우회는 공개 빌드에 포함하지 않음.
 
-## 미완료 외부 검증
+## 남은 외부 검증
 
-- Cloudflare 계정 생성·이메일 인증·Wrangler 로그인·Workers Free 실제 계정 확인.
-- 관리형 백엔드 배포와 실제 Turnstile 검증 후 온라인 개방.
+- 실제 Turnstile·공개 관리형 WebSocket 검증 후 온라인 개방.
 - 서로 다른 두 실제 기기·인터넷 회선에서 PvP와RTT 측정.
 - 실제 Edge 검증. Safari 기본 연습 검증을 온라인 실서비스 검증으로 확대하지 않음.
 - Firefox는 애플리케이션 페이지 생성 전macOS sandbox/SWGL 실행 오류로 미검증. 프로젝트 오류라고 단정하지 않음.
